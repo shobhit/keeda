@@ -21,8 +21,8 @@
    $('#button1,#button2').click(function(event){ 
     if($(event.target).attr('id')=='button1'){
         /* specific code for button1 */
-        $('*').mouseenter(ShowLi).click(ShowKi);
-        
+        insp();
+
     } else if($(event.target).attr('id')=='button2'){
         /* specific code for button2 */
         alert(2);
@@ -228,6 +228,9 @@ $(function() {
       data['htmlRes'] = $(this).html();
       data['cssSelector'] = findCssSelector(this);
       return false;
+  }
+  function insp(){
+    $('*').mouseenter(ShowLi).click(ShowKi);
   }
 
 });
