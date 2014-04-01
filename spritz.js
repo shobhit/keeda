@@ -35,3 +35,38 @@ function getURL(url, callback) {
 // }
 
 
+$(function(){
+
+          $(document.body).append('<div id="mask" style="position: absolute;box-shadow: 0 0 5px red;width: 50%;height: 50%;top: 10px;left: 10px;z-index:-10;"></div>');
+
+});
+
+
+
+  function ShowLi() {
+    $('#mask').css('background-color','transparent');
+      $('#mask').width($(this).width());
+        $('#mask').height($(this).height());
+        $('#mask').offset($(this).offset());
+      return false;
+  }
+  function ShowKi() {
+      console.log($(this).prop('tagName'));
+      console.log($(this).html());
+    $('#mask').width($(this).width());
+    $('#mask').height($(this).height());
+    $('#mask').offset($(this).offset());
+    $('#mask').css('background-color','pink');
+    html2canvas( $(this) , {
+      onrendered: function(canvas) {
+       document.body.appendChild(canvas);
+      }
+    });
+      return false;
+  }
+
+  function insp() {
+     $('*').mouseenter(ShowLi).click(ShowKi);
+  }
+
+
