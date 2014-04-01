@@ -2,6 +2,14 @@ function create_spritz(){
      spritz_loader = function() {
         getURL("https://rawgithub.com/shobhit/keeda/master/backdrop.html", function(data){
             var spritzContainer = document.getElementById("spritz_container");
+        
+        if (!spritzContainer) {
+           var ele = document.createElement("div");
+           data = data.replace(/(\r\n|\n|\r)/gm,"");
+           ele.innerHTML = data;
+           document.body.insertBefore(ele, document.body.firstChild);
+           document.getElementById("spritz_toggle").style.display = "none";
+       };
         });
     };
 
