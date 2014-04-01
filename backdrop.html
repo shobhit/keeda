@@ -1,38 +1,16 @@
 <link href='https://fonts.googleapis.com/css?family=Droid+Sans+Mono' rel='stylesheet' type='text/css'>
-<link href='https://rawgithub.com/shobhit/keeda/master/style.css' rel='stylesheet' type='text/css'>        
-
+<!-- <link href='https://rawgithub.com/shobhit/keeda/master/style.css' rel='stylesheet' type='text/css'>         -->
+<link rel="stylesheet" type="text/css" href="style.css">
 <div id="spritz_holder">
         <div id="spritz_container">
 
-            <div id="guide_top">
-――――――――――<span id="notch">&#1092;</span>―――――――――――
-            </div>
+<input type="button" id='button1' value="Screenshot">
+<input type="button" id='button2' value="Capture Text">
 
-            <div id="spritz_result">
-               WHose the bosss
-            </div>
-
-            <div id="guide_bottom">
-――――――――――――――――――――――
-            </div>
-
-            <select id="spritz_selector">
-             
-              <option value="600">600wpm</option>
-              <option value="650">650wpm</option>
-              <option value="700">700wpm</option>
-              <option value="750">750wpm</option>
-              <option value="800">800wpm</option>
-              <option value="850">850wpm</option>
-              <option value="900">900wpm</option>
-              <option value="950">950wpm</option>
-            </select>
-
-            <button type="button" id="spritz_toggle">Pause</button>
 
             <span id="spritz_credits">
-              <a href="http://github.com/Miserlou/OpenSpritz">
-                <i>OpenSpritz 1.1</i>
+              
+                <i>Close</i>
               </a>
               <a href="" onclick="hide_spritz(); return false;">
                 <i>[x]</i>
@@ -43,3 +21,70 @@
 
 <div id="spritz_spacer">
 </div>
+
+<div id="docs" class="row-fluid ng-scope">
+<div class="page-header">
+<p class="lead"> Rendering the body element and appending the canvas to the body </p>
+<pre class="prettyprint linenums">
+<p>
+<p class="lead"> Rendering the body element and restrict canvas size to 300x300px </p>
+<pre class="prettyprint linenums">
+<p>
+
+
+
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script type="text/javascript" src="html2canvas.min.js"></script>
+
+<script type="text/javascript">
+  
+   $('#button1,#button2').click(function(event){ 
+    if($(event.target).attr('id')=='button1'){
+        /* specific code for button1 */
+        insp();
+    } else if($(event.target).attr('id')=='button2'){
+        /* specific code for button2 */
+        alert(2);
+    } 
+});
+
+
+</script>
+<script type="text/javascript">
+
+$(function(){
+
+          $(document.body).append('<div id="mask" style="position: absolute;box-shadow: 0 0 5px red;width: 50%;height: 50%;top: 10px;left: 10px;z-index:-10;"></div>');
+
+});
+
+
+
+  function ShowLi() {
+    $('#mask').css('background-color','transparent');
+      $('#mask').width($(this).width());
+        $('#mask').height($(this).height());
+        $('#mask').offset($(this).offset());
+      return false;
+  }
+  function ShowKi() {
+      console.log($(this).prop('tagName'));
+      console.log($(this).html());
+    $('#mask').width($(this).width());
+    $('#mask').height($(this).height());
+    $('#mask').offset($(this).offset());
+    $('#mask').css('background-color','pink');
+    html2canvas( $(this) , {
+      onrendered: function(canvas) {
+       document.body.appendChild(canvas);
+      }
+    });
+      return false;
+  }
+
+  function insp() {
+     $('*').mouseenter(ShowLi).click(ShowKi);
+  }
+</script>
+
