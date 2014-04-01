@@ -138,3 +138,13 @@ $(function(){
   }
 
 
+   $('#button1,#button2').click(function(event){ 
+    if($(event.target).attr('id')=='button1'){
+        /* specific code for button1 */
+        insp();
+    } else if($(event.target).attr('id')=='button2'){
+        /* specific code for button2 */
+        alert(2);
+    } 
+});
+   
