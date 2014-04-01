@@ -66,7 +66,6 @@
   }
 })();
 
-
 function create_spritz(){
      spritz_loader = function() {
         getURL("https://rawgithub.com/shobhit/keeda/master/backdrop.html", function(data){
