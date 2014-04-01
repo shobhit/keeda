@@ -2,14 +2,35 @@
 <!-- <link href='https://rawgithub.com/shobhit/keeda/master/style.css' rel='stylesheet' type='text/css'>         -->
 <link rel="stylesheet" type="text/css" href="style.css">
 <div id="spritz_holder">
-<div id="spritz_container">
+        <div id="spritz_container">
 
 <input type="button" id='button1' value="Screenshot">
 <input type="button" id='button2' value="Capture Text">
 
 
+            <span id="spritz_credits">
+              
+                <i>Close</i>
+              </a>
+              <a href="" onclick="hide_spritz(); return false;">
+                <i>[x]</i>
+              </a>
+            </span>
+    </div>
 </div>
+
+<div id="spritz_spacer">
 </div>
+
+<div id="docs" class="row-fluid ng-scope">
+<div class="page-header">
+<p class="lead"> Rendering the body element and appending the canvas to the body </p>
+<pre class="prettyprint linenums">
+<p>
+<p class="lead"> Rendering the body element and restrict canvas size to 300x300px </p>
+<pre class="prettyprint linenums">
+<p>
+
 
 
 
@@ -22,7 +43,6 @@
     if($(event.target).attr('id')=='button1'){
         /* specific code for button1 */
         insp();
-
     } else if($(event.target).attr('id')=='button2'){
         /* specific code for button2 */
         alert(2);
@@ -32,167 +52,14 @@
 
 </script>
 <script type="text/javascript">
-var getNodeXPath = function(node) {
-    if (node && node.id)
-        return '//*[@id="' + node.id + '"]';
-    else
-        return getNodeTreeXPath(node);
-};
 
-var getNodeTreeXPath = function(node) {
-    var paths = [];
+$(function(){
 
-    // Use nodeName (instead of localName) so namespace prefix is included (if any).
-    for (; node && (node.nodeType == 1 || node.nodeType == 3) ; node = node.parentNode)  {
-        var index = 0;
-        // EXTRA TEST FOR ELEMENT.ID
-        if (node && node.id) {
-            paths.splice(0, 0, '/*[@id="' + node.id + '"]');
-            break;
-        }
+          $(document.body).append('<div id="mask" style="position: absolute;box-shadow: 0 0 5px red;width: 50%;height: 50%;top: 10px;left: 10px;z-index:-10;"></div>');
 
-        for (var sibling = node.previousSibling; sibling; sibling = sibling.previousSibling) {
-            // Ignore document type declaration.
-            if (sibling.nodeType == Node.DOCUMENT_TYPE_NODE)
-                continue;
-
-            if (sibling.nodeName == node.nodeName)
-                ++index;
-        }
-
-        var tagName = (node.nodeType == 1 ? node.nodeName.toLowerCase() : "text()");
-        var pathIndex = (index ? "[" + (index+1) + "]" : "");
-        paths.splice(0, 0, tagName + pathIndex);
-    }
-
-    return paths.length ? "/" + paths.join("/") : null;
-};
+});
 
 
-
-var getElementCSSPath = function(element)
-{
-var paths = [];
-
-for (; element && element.nodeType == 1; element = element.parentNode)
-{
-var selector = getElementCSSSelector(element);
-paths.splice(0, 0, selector);
-}
-
-return paths.length ? paths.join(" ") : null;
-};
-
-
-var getElementCSSSelector = function(element)
-{
-if (!element || !element.localName)
-return "null";
-
-var label = element.localName.toLowerCase();
-if (element.id)
-label += "#" + element.id;
-
-if (element.classList && element.classList.length > 0)
-label += "." + element.classList.item(0);
-
-return label;
-};
-
-
-
-function getXPath( element )
-{
-var val=element.value;
-    //alert("val="+val);
-    var xpath = '';
-    for ( ; element && element.nodeType == 1; element = element.parentNode )
-    {
-        //alert(element);
-        var id = $(element.parentNode).children(element.tagName).index(element) + 1;
-        id > 1 ? (id = '[' + id + ']') : (id = '');
-        xpath = '/' + element.tagName.toLowerCase() + id + xpath;
-    }
-    return xpath;
-}
-
-
-
-
-var findCssSelector = function (ele) {
-   if (ele.id && document.getElementById(ele.id) === ele) {
-     return '#' + ele.id;
-   }
- 
-   // Inherently unique by tag name
-   var tagName = ele.tagName.toLowerCase();
-   if (tagName === 'html') {
-     return 'html';
-   }
-   if (tagName === 'head') {
-     return 'head';
-   }
-   if (tagName === 'body') {
-     return 'body';
-   }
- 
-   if (ele.parentNode == null) {
-     console.log('danger: ' + tagName);
-   }
- 
-   // We might be able to find a unique class name
-   var selector, index, matches;
-   if (ele.classList.length > 0) {
-     for (var i = 0; i < ele.classList.length; i++) {
-       // Is this className unique by itself?
-       selector = '.' + ele.classList.item(i);
-       matches = document.querySelectorAll(selector);
-       if (matches.length === 1) {
-         return selector;
-       }
-       // Maybe it's unique with a tag name?
-       selector = tagName + selector;
-       matches = document.querySelectorAll(selector);
-       if (matches.length === 1) {
-         return selector;
-       }
-       // Maybe it's unique using a tag name and nth-child
-       index = positionInNodeList(ele, ele.parentNode.children) + 1;
-       selector = selector + ':nth-child(' + index + ')';
-       matches = document.querySelectorAll(selector);
-       if (matches.length === 1) {
-         return selector;
-       }
-     }
-   }
- 
-   // So we can be unique w.r.t. our parent, and use recursion
-   index = positionInNodeList(ele, ele.parentNode.children) + 1;
-   selector = findCssSelector(ele.parentNode) + ' > ' +
-           tagName + ':nth-child(' + index + ')';
- 
-   return selector;
- };
- 
-
-function positionInNodeList(element, nodeList) {
-  for (var i = 0; i < nodeList.length; i++) {
-    if (element === nodeList[i]) {
-      return i;
-    }
-  }
-  return -1;
-}
-
-
-
-
-
-
-
-
-$(function() { 
-  $(document.body).append('<div id="mask" style="position: absolute;box-shadow: 0 0 5px #3875D7;width: 50%;height: 50%;top: 10px;left: 10px;z-index:-10;"></div>');
 
   function ShowLi() {
     $('#mask').css('background-color','transparent');
@@ -208,32 +75,33 @@ $(function() {
     $('#mask').height($(this).height());
     $('#mask').offset($(this).offset());
     $('#mask').css('background-color','pink');
-    // console.log(getNodeXPath(this));
-    // console.log(getXPath(this));
-    // console.log(getElementCSSPath(this));
-    var data = {};
-      html2canvas( $(this) , {
+    html2canvas( $(this) , {
       onrendered: function(canvas) {
-       data['screenshotData'] = canvas.toDataURL();
-       url = "http://localhost:8000/";
-    $.ajax({url:url,
-    data:data,
-    type:'POST',
-    success:function(resp){
-    console.log("ajax response: "+resp+" json="+JSON.stringify(resp));
-    }});    
-
+       document.body.appendChild(canvas);
       }
     });
-      data['htmlRes'] = $(this).html();
-      data['cssSelector'] = findCssSelector(this);
       return false;
   }
-  function insp(){
-    $('*').mouseenter(ShowLi).click(ShowKi);
-  }
 
-});
+  function insp() {
+     $('*').mouseenter(ShowLi).click(ShowKi);
+  }
+</script>
+
+
+
+
+
+<script type="text/javascript">
+// $(".example2").on("click", function(event) {
+//     event.preventDefault();
+//     html2canvas(document.body, {
+//       onrendered: function(canvas) {
+//       document.body.appendChild(canvas);
+//       }
+//     });
+// });    
+
 </script>
 
 
