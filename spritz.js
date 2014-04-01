@@ -39,7 +39,7 @@
  };
  head.appendChild(script);
   }
-  getScript('http://code.jquery.com/jquery-latest.min.js',function() {
+  getScript('http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js',function() {
  if (typeof jQuery=='undefined') {
    msg='Sorry, but jQuery wasn\'t able to load';
  } else {
